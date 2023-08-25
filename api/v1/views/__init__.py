@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-"""Routes for API status and statistics."""
+"""Views for API status and statistics."""
 
-from flask import jsonify
-from api.v1.views import app_views
+from flask import Blueprint
 
-# Route for API status
-@app_views.route('/status', strict_slashes=False)
-def api_status():
-    """Return API status."""
-    return jsonify(status="OK")
+# Create a Blueprint instance for app_views
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+
+# Import the views here to avoid circular imports
+from api.v1.views.index import *
