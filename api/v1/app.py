@@ -25,6 +25,12 @@ def close_db(error):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Handle 404 errors with a JSON response."""
+    return jsonify({"error": "Not found"}), 404
+
+
 # Run the app if executed directly
 if __name__ == "__main__":
     import os
