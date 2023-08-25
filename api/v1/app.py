@@ -20,19 +20,11 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 @app.teardown_appcontext
 def close_db(error):
     """Close the database connection after each request."""
-    storage.close()
-    
-@app.errorhandler(404)
-def error_404(exe):
-    """error 404"""
-    return jsonify({"error": "Not found"}), 404
-
+    storage.close()    
 
 # Run the app if executed directly
 if __name__ == "__main__":
-    app.run(
-        host=getenv("HBNB_API_HOST", "0.0.0.0"),
-        port=int(getenv("HBNB_API_PORT", "5000")),
-        threaded=True,
-        debug=True
-    )
+    import os
+    port = int(os.environ.get('HBNB_API_PORT', 5000))
+    host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
+    app.run(host=host, port=port, threaded=True)
