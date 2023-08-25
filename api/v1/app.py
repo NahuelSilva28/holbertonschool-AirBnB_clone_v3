@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Main module for the API"""
 
+
 from api.v1.views import app_views
 from os import getenv
 from flask import Flask, jsonify
@@ -16,11 +17,13 @@ app.register_blueprint(app_views)
 # Allow cross-origin requests
 cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
+
 # Close database
 @app.teardown_appcontext
 def close_db(error):
     """Close the database connection after each request."""
-    storage.close()    
+    storage.close()
+
 
 # Run the app if executed directly
 if __name__ == "__main__":
