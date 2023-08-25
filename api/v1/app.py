@@ -21,6 +21,12 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 def close_db(error):
     """Close the database connection after each request."""
     storage.close()
+    
+@app.errorhandler(404)
+def error_404(exe):
+    """"""
+    return jsonify({"error": "Not found"}), 404
+
 
 # Run the app if executed directly
 if __name__ == "__main__":
