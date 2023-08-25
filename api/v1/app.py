@@ -7,7 +7,6 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
 
-
 # Flask instance
 app = Flask(__name__)
 
@@ -22,12 +21,6 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 def close_db(error):
     """Close the database connection after each request."""
     storage.close()
-
-# Error 404
-@app.errorhandler(404)
-def handle_404(error):
-    """Handle 404 errors."""
-    return jsonify({"error": "Not found"}), 404
 
 # Run the app if executed directly
 if __name__ == "__main__":
