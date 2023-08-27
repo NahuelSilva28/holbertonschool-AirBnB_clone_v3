@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """States module"""
 
+from models.state import State
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
-from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -52,16 +52,18 @@ def create_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id):
-    """Update a State object"""
-    state = storage.get(State, state_id)
-    if state:
-        if not request.get_json():
-            abort(400, "Not a JSON")
+def update_an_obj(state_id):
+    """Updates a State object"""
+    stt = storage.get(State, state_id)
+    if not stt:
+        abort(404)
+
+    try:
         data = request.get_json()
         for key, value in data.items():
             if key != "id" and key != "created_at" and key != "updated_at":
-                setattr(state, key, value)
+                setattr(stt, key, value)
         storage.save()
-        return jsonify(state.to_dict()), 200
-    abort(404)
+        return jsonify(stt.to_dict()), 200
+    except:
+        abort(400, "Not a JSON")
