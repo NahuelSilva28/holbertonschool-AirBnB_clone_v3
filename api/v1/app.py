@@ -27,7 +27,7 @@ def close_db(error):
 
 @app.errorhandler(404)
 def not_found(error):
-    """Handle 404 errors with a JSON response."""
+    """404"""
     return jsonify({"error": "Not found"}), 404
 
 
